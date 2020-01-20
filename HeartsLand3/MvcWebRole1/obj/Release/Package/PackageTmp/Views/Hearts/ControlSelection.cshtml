@@ -1,0 +1,83 @@
+﻿@{	
+	Layout = "~/Views/Shared/_LayoutHorizontal.cshtml";
+}
+<form data-wrap="room_table" data-wrap-id="step1">
+	<h3>留言板列表</h3>
+	<p>此設定值為本區域所包涵的留言板ID列表。</p>
+	<p>留言板ID之間請以逗點(",")分隔，請不要插入空白或換行符號。留言板ID的順序即為留言板列在區域頁中的順序。</p>
+	<ins id="insert_input_pt"></ins>
+	<p>
+		<input type="button" value="確定" onclick="setBoardList(this);" />
+		<input type="button" value="取消" onclick="location.assign('/');" />
+	</p>
+	<p class="status_info"></p>
+</form>
+<ins id="top_insert_pt"></ins>
+@section Menu {
+	<li><a data-link="selection">回區域</a></li>
+}
+@section PageScript {
+	<script>
+		var board_list_ta;
+		function pagePrepare() {
+			var selection_id = getselectionid();
+			var selection_link = makeSandLink(selection_id);
+
+			$("a[data-link='selection']").attr("href", selection_link);
+
+			makeRoomBanner({
+				id: "selection_name",
+				words: "區域名",
+				position: "bottom",
+				link: selection_link,
+				insert_before: "top_insert_pt"
+			});
+			makeRoomBanner({
+				words: "控制台",
+				position: "bottom",
+				insert_before: "top_insert_pt"
+			});
+			board_list_ta = makeWordsTextArea({
+				cols: 50,
+				rows: 8,
+				max_len: MAX_NUM_OF_BOARDS_IN_A_SELECTION * 7,
+				insert_before: "insert_input_pt"
+			});
+
+			getGoods("/selectionsetting/" + selection_id, onSelectionSetting);
+		}
+		function onSelectionSetting(data) {
+			if (data !== null) {
+				var selection_id = getselectionid();
+				var selection_link = makeBoardLink(selection_id, data.selection_name);
+
+				modifyRoomBanner($("#selection_name"), {
+					words: data.selection_name,
+					link: selection_link
+				});
+				$("a[data-link='selection']").text("回" + data.selection_name);
+				$("a[data-link='selection']").attr("href", selection_link);
+
+				board_list_ta.val(data.board_list);
+			}
+		}
+		function setBoardList(btn) {
+			var status_info = findInfoElement($(btn), 1, 1, ".status_info");
+			var selection_id = getselectionid();
+
+			var board_list = board_list_ta.val();
+
+			var wrong = isBoardList(board_list);
+			if (wrong !== null) {
+				status_info.addClass("is_error").text("格式不正確：" + wrong + "。");
+				return;
+			}
+
+			var post_data = {
+				board_list: board_list,
+			};
+
+			askCaptchaAndPostGoodsAndShowResult(btn, "/selectionsetting/" + selection_id, post_data);
+		}
+	</script>
+}

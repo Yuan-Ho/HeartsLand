@@ -1,0 +1,74 @@
+﻿@{
+	ViewBag.Title = "開新主題 " + HeartsConfiguration.SITE_NAME;
+	Layout = "~/Views/Shared/_LayoutHorizontal.cshtml";
+}
+<script>var pre_boardsetting=@{Html.RenderAction("BoardSetting");};</script>
+
+<table data-wrap="room_table" data-wrap-id="create_wizard">
+	<tr>
+		<td class="layout_only">
+			<form>
+				<ins id="cw_insert_input_pt"></ins>
+				<p class="error_info">開新主題失敗。錯誤訊息："<span></span>"</p>
+				<p>
+					<input type="button" value="確定張貼" onclick="doCreateDiscussion(this, isViewScribble() ? 4 : 0);" />
+					<input type="button" value="取消" onclick="location.assign('/' + getboardid());" />
+				</p>
+			</form>
+		</td>
+		<td class="layout_only">
+			<form class="tbrl">
+				<ins id="cw_insert_option_pt"></ins>
+			</form>
+		</td>
+	</tr>
+</table>
+@section Menu {
+	<li><a data-link="board">回留言板</a></li>
+}
+@section PageScript {
+	<script>
+		var create_wizard_elt;
+		function pagePrepare() {
+			g_image_limit = Infinity;
+			//
+			var board_id = getboardid();
+			var board_name = pre_boardsetting.BoardName;
+			var board_link = makeBoardLink(board_id, board_name);
+
+			var banner = isViewScribble() ? "開新塗鴉主題" : "開新主題";
+			document.title = banner + " " + board_name + " 心船";
+			prepareShortcut(board_name);
+			//
+			$(".createfail").hide();
+
+			makeRoomBanner({
+				words: "心船",
+				position: "bottom",
+				link: "/",
+				insert_before: "create_wizard"
+			});
+			makeRoomBanner({
+				words: board_name,
+				position: "bottom",
+				link: board_link,
+				insert_before: "create_wizard"
+			});
+			makeRoomBanner({
+				words: banner,
+				position: "bottom",
+				insert_before: "create_wizard"
+			});
+			create_wizard_elt = makeLetterEditor("create_wizard", "cw_insert_input_pt", "cw_insert_option_pt",
+							{
+								have_heading: true,
+								big: true,
+								get_new_sn: function () { return 1; },
+								can_split: true,
+								is_edit: false
+							});
+
+			create_wizard_elt.focus();
+		}
+	</script>
+}

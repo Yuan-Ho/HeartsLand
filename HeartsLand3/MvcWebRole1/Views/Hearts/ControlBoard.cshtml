@@ -1,0 +1,206 @@
+﻿@{	
+	Layout = "~/Views/Shared/_LayoutHorizontal.cshtml";
+}
+<script>var pre_boardsetting=@{Html.RenderAction("BoardSetting");};</script>
+
+<form data-wrap="room_table" data-wrap-id="step5">
+	<h3>低調</h3>
+	<p>此設定值控制本板的討論串是否會被收錄到首頁的摘要區。沒有板主時，任何人都可以變更此設定。有板主時，只有板主可以變更此設定。</p>
+	<p>若設為低調，則本板的討論串不會被收錄到首頁的摘要區。</p>
+	<p>若不設為低調，則當有新討論串或有新留言時，該討論串會被推到首頁的摘要區的最前面。</p>
+	<ins></ins>
+	<p>
+		<input type="button" value="確定" onclick="setBoardLowKey(this);" />
+		<input type="button" value="取消" onclick="location.assign('/');" />
+	</p>
+	<p class="status_info"></p>
+</form>
+
+<form data-wrap="room_table" data-wrap-id="step4">
+	<h3>內部群組</h3>
+	<p>此設定值為本板的內部群組成員列表。沒有板主時，任何人都可以變更此設定。有板主時，只有板主可以變更此設定。</p>
+	<p>成員的使用者名稱之間請以逗點(",")分隔，請不要插入空白或換行符號。</p>
+	<p>內部群組人數上限為100人。內部群組成員可以看到不公開的留言。</p>
+	<ins></ins>
+	<p>
+		<input type="button" value="確定" onclick="setBoardGroup(this, InsiderGroupName);" />
+		<input type="button" value="取消" onclick="location.assign('/');" />
+	</p>
+	<p class="status_info"></p>
+</form>
+
+<form data-wrap="room_table" data-wrap-id="step3">
+	<h3>副板主</h3>
+	<p>此設定值為本板的副板主列表。沒有板主時，任何人都可以變更此設定。有板主時，只有板主可以變更此設定。</p>
+	<p>副板主的使用者名稱之間請以逗點(",")分隔，請不要插入空白或換行符號。</p>
+	<p>副板主可以有多位。副板主的權力包括刪除或復原留言或討論串，及編輯留言或討論串標題。</p>
+	<ins></ins>
+	<p>
+		<input type="button" value="確定" onclick="setBoardGroup(this, ViceOwnerGroupName);" />
+		<input type="button" value="取消" onclick="location.assign('/');" />
+	</p>
+	<p class="status_info"></p>
+</form>
+
+<form data-wrap="room_table" data-wrap-id="step2">
+	<h3>板主</h3>
+	<p>此設定值為本板板主的使用者名稱。沒有板主時，任何人都可以變更此設定。有板主時，只有板主可以變更此設定。</p>
+	<p>留言板板主只能有一位。板主的權力包括任免副板主，及副板主的權力。</p>
+	<ins></ins>
+	<p>
+		<input type="button" value="確定" onclick="setBoardGroup(this, ChairOwnerGroupName);" />
+		<input type="button" value="取消" onclick="location.assign('/');" />
+	</p>
+	<p class="status_info"></p>
+</form>
+
+<form data-wrap="room_table" data-wrap-id="step1" onsubmit="return false;">
+	<h3>留言板名</h3>
+	<p>此設定值為本留言板的名字。只有板主可以變更此設定。</p>
+	<p>板名結尾將自動被加上”板”字。不計”板”字的長度請在2到18字之間。</p>
+	<ins></ins>
+	<p>
+		<input type="button" value="確定" onclick="setBoardName(this);" />
+		<input type="button" value="取消" onclick="location.assign('/');" />
+	</p>
+	<p class="status_info"></p>
+</form>
+<ins id="top_insert_pt"></ins>
+@section Menu {
+	<li><a data-link="board">回留言板</a></li>
+}
+@section PageScript {
+	<script>
+		var board_name_input_elt;
+		var low_key_check_elt;
+
+		function pagePrepare() {
+			var board_id = getboardid();
+			var board_link = makeSandLink(board_id)/*"/" + board_id*/;
+
+			$("a[data-link='board']").attr("href", board_link);
+
+			makeRoomBanner({
+				id: "board_name",
+				words: "留言板名",
+				position: "bottom",
+				link: board_link,
+				insert_before: "top_insert_pt"
+			});
+			makeRoomBanner({
+				words: "控制台",
+				position: "bottom",
+				insert_before: "top_insert_pt"
+			});
+			board_name_input_elt = makeBoardNameInput($("#step1 ins"));
+
+			makeWordsTextArea({
+				cols: 50,
+				rows: 8,
+				max_len: MAX_NUM_OF_USERS_IN_A_GROUP * (USER_NAME_FIELD_MAX_LEN + 1),
+				insert_before: $("#step2 ins")
+			});
+			makeWordsTextArea({
+				cols: 50,
+				rows: 8,
+				max_len: MAX_NUM_OF_USERS_IN_A_GROUP * (USER_NAME_FIELD_MAX_LEN + 1),
+				insert_before: $("#step3 ins")
+			});
+			makeWordsTextArea({
+				cols: 50,
+				rows: 8,
+				max_len: MAX_NUM_OF_USERS_IN_A_GROUP * (USER_NAME_FIELD_MAX_LEN + 1),
+				insert_before: $("#step4 ins")
+			});
+			low_key_check_elt = makePlainCheckBox({
+				name: "低調",
+				insert_before: $("#step5 ins")
+			});
+			//getGoods("/boardsetting/" + board_id, onBoardSetting);
+			onBoardSetting(pre_boardsetting);
+		}
+		function onBoardSetting(data) {
+			if (data !== null) {
+				var board_id = getboardid();
+				var board_link = makeBoardLink(board_id, data.BoardName);
+
+				modifyRoomBanner($("#board_name"), {
+					words: data.BoardName,
+					link: board_link
+				});
+				$("a[data-link='board']").text("回" + data.BoardName);
+				$("a[data-link='board']").attr("href", board_link);
+
+				board_name_input_elt.val(data.BoardName.substr(0, data.BoardName.length - 1)/*skip"板"字*/);
+				//
+				var value = "";//2015-11-6 remove sql db. //data[ChairOwnerGroupName].join(",");
+				$("#step2 textarea").val(value).data("initialValue", value);
+
+				value = "";//2015-11-6 remove sql db. //data[ViceOwnerGroupName].join(",");
+				$("#step3 textarea").val(value).data("initialValue", value);
+
+				value = "";//2015-11-6 remove sql db. //data[InsiderGroupName].join(",");
+				$("#step4 textarea").val(value).data("initialValue", value);
+
+				modifyOptionCheckBox(low_key_check_elt, data.LowKey);
+			}
+		}
+		function setBoardLowKey(btn) {
+			var board_id = getboardid();
+
+			var checked = low_key_check_elt.prop("checked");
+
+			var post_data = {
+				delta_flags: flagsAdd("", MT_LOW_KEY, checked ? 1 : 0),
+			};
+
+			askCaptchaAndPostGoodsAndShowResult(btn, "/boardsetting/" + board_id, post_data);
+		}
+		function setBoardName(btn) {
+			var board_id = getboardid();
+
+			if (!board_name_input_elt.check_input())
+				return;
+
+			var board_name = board_name_input_elt.val();
+
+			var post_data = {
+				board_name: board_name,
+			};
+
+			askCaptchaAndPostGoodsAndShowResult(btn, "/boardsetting/" + board_id, post_data);
+		}
+		function setBoardGroup(btn, group_id) {
+			var btn_elt = $(btn);
+
+			var status_info = findInfoElement(btn_elt, 1, 1, ".status_info");
+			var ta = findInfoElement(btn_elt, 1, -2, "textarea", 1);
+
+			var board_id = getboardid();
+			var user_list = ta.val();
+
+			var wrong = isUserNameList(user_list);
+			if (wrong !== null) {
+				status_info.addClass("is_error").text("格式不正確：" + wrong + "。");
+				return;
+			}
+			var iu = splitAndRemoveEmpty(ta.data("initialValue"), ",");
+			var nu = splitAndRemoveEmpty(user_list, ",");
+
+			var au = nu.filter(function (user_name) {
+				return iu.indexOf(user_name) === -1;
+			});
+			var ru = iu.filter(function (user_name) {
+				return nu.indexOf(user_name) === -1;
+			});
+
+			var post_data = {
+				group_id: group_id,
+				add_users: au.join(","),
+				remove_users: ru.join(","),
+			};
+
+			askCaptchaAndPostGoodsAndShowResult(btn, "/boardsetting/" + board_id, post_data);
+		}
+	</script>
+}

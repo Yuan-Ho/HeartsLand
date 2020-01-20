@@ -1,0 +1,91 @@
+﻿html {
+	height: 100%;
+}
+
+body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+#map_canvas {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+	-webkit-user-select: none; /*user select text interferes with mouse panning*/
+	-ms-user-select: none;
+	-moz-user-select: none;
+}
+
+.full_size {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+}
+
+div.top_passage {
+	position: fixed;
+	top: 2%;
+	width: 15em;
+	height: 3em;
+}
+
+div.left_passage {
+	position: fixed;
+	left: 1%;
+	height: 4em;
+	//width: 2em;
+}
+
+div.bottom_passage {
+	position: fixed;
+	top: calc(98% - 3em);
+	width: 15em;
+	height: 3em;
+}
+
+#color_pane {
+	position: absolute;
+	//background-color: black;
+	//padding: 1em;
+	//border: 1px solid red;
+}
+
+#color_buttons {
+	text-align: center;
+}
+
+	#color_buttons > button {
+		width: 40%;
+	}
+.sel_passage {
+	text-shadow: 0px 0px 1px black,
+					0px 0px 2px red;
+}
+#floating_info {
+	position: absolute;
+	text-shadow: 0px 0px 2px black;
+	color: red;
+	letter-spacing: .2em;
+	font-weight: bold;
+	width: 4em;
+}
+.cursor_pencil {
+	cursor: url(../images/ps-pencil.cur), auto;
+}
+.cursor_dropper {
+	cursor: url(../images/ps-dropper.cur), auto;
+}
+.cursor_eraser {
+	cursor: url(../images/ps-eraser.cur), auto;
+}
+.cursor_hand {
+	cursor: url(../images/ps-hand.cur), auto;
+}
+.cursor_poser {
+	cursor: crosshair;
+}
+#chosen_image {
+	position: absolute;
+}

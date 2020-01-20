@@ -1,0 +1,93 @@
+﻿@{
+	Layout = "~/Views/Shared/_LayoutHorizontal.cshtml";
+}
+@section Storey2 {
+	<div id="pre_discussionlist" class="preload_not_show">@{Html.RenderAction("DiscussionList");}</div>
+	<div id="pre_bldsummary" class="preload_not_show">@{Html.RenderAction("BldSummary");}</div>
+
+	<ins id="insert_list_point2"></ins>
+
+	<nav class="tbrl" data-wrap="room_table">
+		<ins id="insert_point"></ins><a class="passage panel_link" data-link="control">區域控制台</a>
+	</nav>
+
+	<ins id="insert_list_point"></ins>
+}
+<nav class="tbrl" data-wrap="room_table_interval">
+	<a class="passage rocky_bg" onclick="moreSummary(this, $('#pre_bldsummary'));">顯示更多</a>
+</nav>
+<ins id="insert_summary_point"></ins>
+
+@section Menu {
+	<li><a data-link="control">區域控制台</a></li>
+}
+@section PageScript {
+	<script>
+		function pagePrepare() {
+			makeRoomBanner({
+				words: "心船",
+				position: "bottom",
+				link: "/",
+				insert_before: "insert_list_point"
+			});
+			makeRoomBanner({
+				words: "留言板一覽",
+				insert_after: "insert_list_point"
+			});
+
+			var selection_id = getselectionid();
+
+			//getGoods("/discussionlist/" + selection_id, onDiscussionList);
+			//var data = $("#pre_discussionlist").text();
+			//data = JSON.parse(data);
+			//onDiscussionList(data);
+			processDiscussionList();
+
+			//getGoods("/bldsummary/" + selection_id, insertSummary);
+			//data = $("#pre_bldsummary").text();
+			//data = JSON.parse(data);
+			//insertSummary(data);
+			var $pre_bldsummary = $("#pre_bldsummary");
+			insertSummary2($pre_bldsummary);
+
+			$("a[data-link='control']").attr("href", "/controlselection/" + selection_id);
+		}
+		function processDiscussionList() {
+			var data = $("#pre_discussionlist");
+			var selection_id = getselectionid();
+			var selection_name = data.children("h1").text();
+
+			data.children("nav").each(function (idx, elt) {
+				var nav_data = $(elt);
+				var h2_a = nav_data.children("h2").children("a");
+				var href = h2_a.attr("href");
+				//var board_id = extractBoardId(href);
+				var board_name = h2_a.text();
+
+				insertLinkToList({
+					address: href/*makeBoardLink(board_id, board_name)*/,
+					text: board_name,
+					insert_after: "insert_point"
+				});
+				makeRoomBanner({
+					words: board_name,
+					link: href/*makeBoardLink(board_id, board_name)*/,
+					insert_before: "insert_list_point2"
+				});
+				var nav_elt = makeNavigationBlock({
+					insert_before: "insert_list_point2"
+				});
+
+				insertDiscussionList(nav_data, nav_elt);
+			});
+
+			//document.title = selection_name + " 心之公園";
+
+			makeRoomBanner({
+				words: selection_name,
+				position: "bottom",
+				insert_before: "insert_list_point"
+			});
+		}
+	</script>
+}

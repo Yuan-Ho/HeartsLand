@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+  **********************************************************************************************
+
+  這個檔案是由專案檔案中的工具產生: ServiceConfiguration.Local.cscfg
+
+  對這個檔案所做的變更可能會造成錯誤的行為，而且如果重新產生檔案，所做的變更將會遺失。
+
+  **********************************************************************************************
+-->
+<ServiceConfiguration serviceName="HeartsLand3" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="3" osVersion="*" schemaVersion="2014-06.2.4">
+  <Role name="MvcWebRole1">
+    <Instances count="1" />
+    <ConfigurationSettings></ConfigurationSettings>
+  </Role>
+</ServiceConfiguration>

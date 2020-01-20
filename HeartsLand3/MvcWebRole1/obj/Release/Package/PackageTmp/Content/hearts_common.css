@@ -1,0 +1,500 @@
+﻿.not_show {
+	display: none;
+}
+
+a.not_show {
+	display: none;
+}
+
+table.room.not_show {
+	display: none;
+}
+
+table.room.not_show2 {
+	display: none;
+}
+
+.preload_not_show {
+	display: none;
+}
+
+td.room_body p, form.m_wizard p { /*the margin of first p will enlarge top height of td cell.*/
+	margin-top: 0em;
+	margin-bottom: 0.5em;
+}
+
+label.wizard {
+	border-width: 0px 0px 0px 1.5em;
+	border-style: solid;
+	border-color: indigo /*green*/;
+	padding-left: 0.5em;
+	vertical-align: top;
+}
+
+/*table.t_wizard label.wizard, form.m_wizard label.wizard {
+	border-color: indigo;
+}*/
+
+.error_info {
+	color: red;
+	font-weight: bold;
+	text-indent: 2em;
+	//text-decoration: none;
+	//display: block;
+	margin-top: 6px;
+	display: none;
+}
+
+.small_info {
+	float: right;
+	color: darkgray;
+}
+
+.pos_absolute {
+	position: absolute;
+}
+
+.c_passage {
+	text-shadow: 0px 0px 2px black;
+	color: white;
+	letter-spacing: .4em;
+}
+.d_passage {
+	text-shadow: 0px 0px 2px black;
+	color: white;
+}
+
+.passage {
+	position: relative;		/*2015/8/18: without this line, the buttons (a.passage and label.passage) will be hardly clickable in Chrome. don't understand why.*/
+	display: inline-block;
+	border: none;
+	border-radius: 5px 2px 6px 2px; /*lt, rt, rb, lb*/
+	padding: 9px 8px 14px 10px; /*t, r, b, l*/
+	color: rgba(0,0,0,0.7);
+	/*h-shadow v-shadow blur color*/
+	text-shadow: -1px -1px 0px rgba(0,0,0,0.1); /*top right light*/
+	box-shadow: inset 0px 0px 0px 1px rgba(0,0,0,0.2), /*surrounding light*/
+	inset 3px -5px 0px 0px rgba(0,0,0,0.3), /*bottom left shadow*/
+	inset -1px 2px 0px 0px rgba(255,255,255,0.5); /*top right light*/
+	margin: 0em .15em .15em .15em;
+}
+
+a.passage {
+	max-height: 18.3em; /*room height related*/
+}
+
+.click_btn {
+	background: url(../images/white_tiles.png);
+}
+
+	.click_btn:hover {
+		position: relative;
+		top: -3px;
+		left: 3px;
+	}
+
+	.click_btn:active {
+		position: relative;
+		top: 0px;
+		left: 0px;
+	}
+
+img.user_obj {
+	max-height: 19.8em; /*room height related*/
+	max-width: 25em;
+	padding: 0.3em;
+}
+
+iframe.user_obj {
+	padding: 0.3em;
+}
+
+/*Courtesy of http://subtlepatterns.com/ for the rockywall.png and gold_scale.png.*/
+.rocky_bg {
+	background: url(../images/rockywall.png);
+}
+
+.in_words_btn {
+	background: url(../images/gold_scale.png);
+}
+
+.reply_to_btn {
+	//background: url(../images/noise_pattern_with_crosslines.png);
+	background: url(../images/leather_1.png);
+}
+
+.panel_link {
+	background: url(../images/green_cup.png);
+}
+
+.in_words_link {
+	color: darkgray;
+}
+
+p.in_words_link {
+	margin: 0em;
+}
+
+s {
+	margin: .4em .1em 0em .4em; /*chrome top, ie top, chrome bottom, ie bottom*/
+	color: green;
+	text-decoration: none;
+	vertical-align: top;
+}
+
+a {
+	text-decoration: none;
+	color: black;
+	cursor: pointer;
+}
+
+[data-href] {
+	cursor: pointer;
+}
+
+.hearts_menu img {
+	vertical-align: middle;
+	margin-right: .3em;
+}
+/**************************************************/
+/*.deleted > s {
+	background-color: black;
+	//font-weight: bolder;
+}*/
+
+.tbrl {
+	writing-mode: tb-rl;
+	-webkit-writing-mode: vertical-rl;
+	letter-spacing: 2px;
+	line-height: 1.7em;
+}
+
+table.room {
+	//height: 21.5em; /*room height related*/
+	margin-top: 1.2em;
+	margin-bottom: 0.4em;
+	margin-left: 2px;
+	margin-right: 2px;
+	display: inline-block;
+	//float: right;
+}
+
+td.room_banner {
+	height: 21.5em; /*room height related*/
+	padding-left: .4em;
+}
+
+td.p_bottom {
+	vertical-align: bottom;
+}
+
+td.room_banner header {
+	max-height: 15em; /*For very long English words.*/ /*room height related*/
+	word-wrap: break-word; /*For very long English words.*/
+	border: 5px double green;
+	background-clip: padding-box;
+	background-color: green;
+	padding: 3px 3px 5px 3px;
+	display: inline-block;
+	text-align: left;
+}
+
+.reported td.room_banner header {
+	border-color: red;
+	background-color: red;
+}
+
+.deleted td.room_banner header {
+	border-color: black;
+	background-color: black;
+}
+
+td.room_banner > a {
+	color: white;
+}
+
+td.room_head > footer {
+	height: 20em; /*room height related*/
+	max-height: 20em; /*room height related*/
+	text-indent: -0.35em;
+	padding: 0em .3em 0em .3em;
+	line-height: 1.4em;
+}
+td.room_body footer {
+	padding: .3em 0em .3em 0em;
+	line-height: 1.4em;
+}
+
+footer strong {
+	cursor: pointer;
+}
+
+	footer strong:hover {
+		font-size: large;
+	}
+
+footer mark:nth-of-type(1) {
+	background-color: green;
+	color: white;
+	border: 1px solid green;
+}
+
+footer mark:nth-of-type(2) {
+	color: green;
+	border: 1px solid green;
+	background-color: white;
+}
+
+/*For form inside table inside td.room_body, the height must be set on form.*/
+td.room_body > section, td.room_body form, td.room_body > nav {
+	height: 20em; /*room height related*/
+	max-height: 20em; /*room height related*/
+	padding: 0em .4em .6em .4em;
+	word-wrap: break-word;
+}
+
+td {
+	padding: 0;
+}
+
+	td.room_body > section.tbrl {
+		white-space: pre-wrap;
+	}
+
+	td.room_side > figure {
+		height: 20em; /*room height related*/
+		max-height: 20em; /*room height related*/
+		margin: 0em;
+		text-align: right;
+		padding: 0em 0em .6em 0em;
+	}
+
+		td.room_side > figure > img {
+			vertical-align: middle;
+			margin-bottom: .3em;
+			margin-top: .3em;
+			cursor: pointer;
+		}
+
+	td.room_body figure {
+		margin: 0em;
+		text-align: right;
+		padding: 0em .6em 0em 0em;
+	}
+		td.room_body figure > img {
+			vertical-align: middle;
+			margin-left: .3em;
+			margin-right: .3em;
+			cursor: pointer;
+		}
+
+.tbrl {
+	font-family: "Hearts Land Font 0", "Times New Roman", Times, serif;
+}
+
+	.tbrl.tbrl_ewr1 {
+		font-family: "Hearts Land Font 0", "Times New Roman", Times, serif;
+	}
+
+	.tbrl.tbrl_ewr3 {
+		font-family: "Hearts Land Font 45", "Times New Roman", Times, serif;
+	}
+
+	.tbrl.tbrl_ewr4 {
+		font-family: "Hearts Land Font 90", "Times New Roman", Times, serif;
+	}
+
+td.room_base {
+	height: .7em;
+	border-width: 2px;
+	border-style: solid;
+	text-align: center;
+	font-weight: bold;
+	cursor: pointer;
+	border-color: green;
+	background-color: green;
+}
+
+/*put before insider_only and deleted so that they can override is_subject*/
+.is_subject td.room_base {
+	border-color: darkgreen;
+	background-color: darkgreen;
+}
+
+.insider_only td.room_base {
+	border-color: darkblue;
+	background-color: darkblue;
+}
+
+.delete_remark td.room_base {
+	border-color: darkgray;
+	background-color: darkgray;
+}
+
+.reported td.room_base {
+	border-color: red;
+	background-color: red;
+}
+
+.deleted td.room_base {
+	border-color: black;
+	background-color: black;
+}
+
+table.t_wizard td.room_base {
+	border-color: indigo;
+	background-color: indigo;
+}
+
+td.room_base:hover {
+	background-color: white;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+td.f_wizard {
+	width: 25em;
+}
+
+.hori_tb {
+	column-width: 25em;
+	-webkit-column-width: 25em;
+	-moz-column-width: 25em;
+	width: 25em;
+	white-space: pre-wrap;
+	font-family: "Times New Roman", Times, serif;
+
+	line-height: 1.7em;
+}
+
+/*Courtesy of http://subtlepatterns.com/ for the tileable_wood_texture.png.*/
+label.option {
+	position: relative;
+	display: inline-block;
+	cursor: pointer;
+	color: darkgray;
+	padding: 10px 9px 11px 9px; /*top, right = original - 1px(border width)*/
+	/*bottom = original - 5px(shadow width)*/
+	/*left = original - 3px(shadow width)*/
+	border: dashed 1px darkgray;
+	border-radius: 2px;
+	//margin-bottom: 0.7em;
+	margin: .15em .15em .7em .15em;
+}
+
+	label.option:after {
+		content: attr(data-text);
+		position: absolute;
+		top: -5px;
+		left: -1px;
+		border: none;
+		border-radius: 5px 2px 6px 2px; /*lt, rt, rb, lb*/
+		padding: 11px 10px 16px 12px; /*t, r, b, l*/
+		/*inset hoffset voffset blur spread color*/
+		height: calc(100% - 21px);
+		z-index: 1;
+		transition-duration: 0.5s;
+		transition-property: top, left;
+		transition-timing-function: ease-out;
+		color: rgba(0,0,0,0.7);
+		/*h-shadow v-shadow blur color*/
+		text-shadow: 1px 1px 0px rgba(255,255,255,0.5); /*top right light*/
+		box-shadow: inset 0px 0px 0px 1px rgba(0,0,0,0.2), /*surrounding light*/
+		inset 3px -5px 0px 0px rgba(0,0,0,0.3), /*bottom left shadow*/
+		inset -1px 2px 0px 0px rgba(255,255,255,0.5); /*top right light*/
+		background: url(../images/tileable_wood_texture.png);
+	}
+
+.invisible:after {
+	visibility: hidden;
+}
+
+label.option.faraway:after {
+	top: -40px;
+	left: 30px;
+}
+
+label.option.intermediate:after {
+	top: -20px;
+	left: 15px;
+}
+
+label.option.onposition:after {
+	top: -5px;
+	left: -1px;
+}
+
+@font-face {
+	font-family: "Hearts Land Font 0";
+	font-style: normal;
+	font-weight: normal;
+	src: url('Hearts Land 0.woff');
+}
+
+
+@font-face {
+	font-family: "Hearts Land Font 45";
+	font-style: normal;
+	font-weight: normal;
+	src: url('Hearts Land 45.woff');
+}
+
+@font-face {
+	font-family: "Hearts Land Font 90";
+	font-style: normal;
+	font-weight: normal;
+	src: url('Hearts Land 90.woff');
+}
+
+input.opra {
+	visibility: hidden;
+	margin-bottom: 35px;
+}
+
+label.opra {
+	display: inline-block;
+	margin-top: -52px;
+	padding-top: 52px;
+	line-height: 46px;
+}
+
+.nowrap {
+	white-space: nowrap;
+}
+
+#debug_log {
+	white-space: pre;
+	position: absolute;
+}
+
+.absolute-center {
+	/* Internet Explorer 10 */
+	display: -ms-flexbox;
+	-ms-flex-pack: center;
+	-ms-flex-align: center;
+	/* Firefox */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	/* Safari, Opera, and Chrome */
+	display: -webkit-box;
+	-webkit-box-pack: center;
+	-webkit-box-align: center;
+	/* W3C */
+	display: box;
+	box-pack: center;
+	box-align: center;
+}
+.hover_move:hover {
+	position: relative;
+	top: 3px;
+	left: 3px;
+}
+
+.hover_move:active {
+	position: relative;
+	top: 0px;
+	left: 0px;
+}

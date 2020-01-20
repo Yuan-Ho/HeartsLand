@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta charset="utf-8" />
+
+	<title>@ViewBag.Title</title>
+	<link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+	@Styles.Render("~/Content/themes/hearts/css", "~/Content/hearts_common")
+	@RenderSection("PageMeta")
+</head>
+<body>
+	@RenderBody()
+
+	<div id="captcha_dialog" title="驗證碼 心船" class="not_show">
+		<p class="dlg_msg">為了避免機器自動快速灌水，請幫忙輸入驗證碼，驗證碼可以區分機器或真人。</p>
+		<div id="recaptcha_dlg"></div>
+	</div>
+	<div id="help_dialog" class="not_show">
+		@RenderSection("HelpContent", false)
+	</div>
+	<ul id="room_menu" class="hearts_menu not_show">
+		@RenderSection("Menu")
+		<li><a href="/" target="/">回首頁</a></li>
+	</ul>
+	<ul id="global_menu" class="hearts_menu not_show">
+		@RenderSection("GlobalMenu", false)
+		<li><a href="/" target="/">回首頁</a></li>
+		<li><a href="/account/register" id="registerLink">註冊</a></li>
+		<li><a href="/account/login" id="loginLink">登入</a></li>
+		<li><a href="/account/manage" id="manageLink">管理我的帳戶</a></li>
+		<li><a onclick="logout();" id="logoutLink">登出</a></li>
+	</ul>
+	<datalist id="remembered_nn"></datalist>
+	<canvas id="relationship_canvas"></canvas>
+
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+	<script src="http://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
+	@Scripts.Render("~/bundles/hearts_common")
+	@RenderSection("PageScript")
+</body>
+</html>

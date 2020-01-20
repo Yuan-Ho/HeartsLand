@@ -1,0 +1,117 @@
+﻿@{
+	Layout = "~/Views/Shared/_LayoutHorizontal.cshtml";
+}
+@section Storey2 {
+	<script>var pre_boardsetting=@{Html.RenderAction("BoardSetting");};</script>
+	<div id="pre_discussionlist" class="preload_not_show">@{Html.RenderAction("DiscussionList");}</div>
+	<div id="pre_bldsummary" class="preload_not_show">@{Html.RenderAction("BldSummary");}</div>
+
+	<nav class="tbrl" data-wrap="room_table_interval">
+		<a class="passage panel_link" data-link="control">留言板控制台</a>
+	</nav>
+
+	<ins id="insert_deleted_point"></ins>
+
+	<nav class="tbrl" data-wrap="room_table" id="insert_point">
+		<a class="passage rocky_bg" data-link="create_discussion">開新主題</a>
+		<a class="passage rocky_bg" data-link="create_map_discussion">開新地圖主題</a>
+		<a class="passage rocky_bg" data-link="create_sky_discussion">開新天空主題</a>
+		<a class="passage rocky_bg" data-link="create_scribble_discussion">開新塗鴉主題</a>
+		<a class="passage rocky_bg not_show" id="show_deleted_btn" onclick="showDeleted();">顯示刪除的主題</a>
+	</nav>
+
+	<ins id="insert_list_point"></ins>
+}
+<nav class="tbrl" data-wrap="room_table_interval">
+	<a class="passage rocky_bg" onclick="moreSummary(this, $('#pre_bldsummary'));">顯示更多</a>
+</nav>
+<ins id="insert_summary_point"></ins>
+
+@section Menu {
+	<li><a data-link="create_discussion">開新主題</a></li>
+	<li><a data-link="create_map_discussion">開新地圖主題</a></li>
+	<li><a data-link="create_sky_discussion">開新天空主題</a></li>
+	<li><a data-link="create_scribble_discussion">開新塗鴉主題</a></li>
+	<li><a data-link="control">留言板控制台</a></li>
+}
+@section PageScript {
+	<script>
+		var g_nav_deleted_elt;
+		var g_nav_reported_elt;
+
+		function pagePrepare() {
+			var board_name = pre_boardsetting.BoardName;
+			prepareShortcut(board_name);
+
+			makeRoomBanner({
+				words: "心船",
+				position: "bottom",
+				link: "/",
+				insert_before: "insert_list_point"
+			});
+			makeRoomBanner({
+				words: "主題一覽",
+				insert_after: "insert_list_point"
+			});
+			if (isBoardOwner()) {
+				g_nav_reported_elt = makeNavigationBlock({
+					addi_cls: "reported",
+					insert_after: "insert_deleted_point"
+				});
+				makeRoomBanner({
+					words: "檢舉的主題",
+					addi_cls: "reported",
+					insert_after: "insert_deleted_point"
+				});
+			}
+			g_nav_deleted_elt = makeNavigationBlock({
+				addi_cls: "deleted not_show",
+				insert_after: "insert_deleted_point"
+			});
+			makeRoomBanner({
+				words: "刪除的主題",
+				addi_cls: "deleted not_show",
+				insert_after: "insert_deleted_point"
+			});
+
+			var board_id = getboardid();
+
+			//getGoods("/discussionlist/" + board_id, onDiscussionList);
+			//var data = $("#pre_discussionlist").text();
+			//data = JSON.parse(data);
+			//onDiscussionList(data);
+			processDiscussionList();
+
+			//getGoods("/bldsummary/" + board_id, insertSummary);
+			//data = $("#pre_bldsummary").text();
+			//data = JSON.parse(data);
+			//insertSummary(data);
+			var $pre_bldsummary = $("#pre_bldsummary");
+			insertSummary2($pre_bldsummary);
+
+			writeAnchorHref($("a[data-link='control']"), "/controlboard/" + board_id);
+		}
+		function processDiscussionList() {
+			var data = $("#pre_discussionlist");
+			var board_id = getboardid();
+
+			var nav_data = data.children("nav");
+			var h2_a = nav_data.children("h2").children("a");
+			var href = h2_a.attr("href");
+			var board_name = h2_a.text();
+
+			var nav_elt = $("#insert_point");
+
+			var has_deleted_item = insertDiscussionList(nav_data, nav_elt, g_nav_deleted_elt, g_nav_reported_elt);
+
+			if (has_deleted_item && isBoardOwner())
+				$("#show_deleted_btn").removeClass("not_show");
+
+			makeRoomBanner({
+				words: board_name,
+				position: "bottom",
+				insert_before: "insert_list_point"
+			});
+		}
+	</script>
+}

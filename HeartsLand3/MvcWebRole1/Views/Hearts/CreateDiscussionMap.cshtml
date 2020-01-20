@@ -1,0 +1,53 @@
+﻿@{
+	ViewBag.Title = "開新地圖主題 " + HeartsConfiguration.SITE_NAME;
+	Layout = "~/Views/Shared/_LayoutMap.cshtml";
+}
+<script>var pre_boardsetting=@{Html.RenderAction("BoardSetting");};</script>
+
+<form id="create_wizard" class="m_wizard above_map">
+	<ins id="cw_insert_input_pt"></ins>
+	<p class="error_info">開新主題失敗。錯誤訊息："<span></span>"</p>
+	<p>
+		<input type="button" value="確定張貼" onclick="doCreateDiscussion(this, 2);" />
+		<input type="button" value="取消" onclick="cancelCreateLetter();" />
+		<ins id="cw_insert_option_pt"></ins>
+	</p>
+</form>
+
+@section Shortcut
+{
+}
+@section Menu
+{
+}
+@section PageScript
+{
+	<script>
+		var create_wizard_elt;
+
+		function pagePrepare() {
+			//var board_name = getBoardName();
+			var board_name = pre_boardsetting.BoardName;
+			//if (board_name != undefined) {
+				document.title = "開新地圖主題 " + board_name + " 心船";
+				prepareShortcut(board_name);
+			//}
+
+			create_wizard_elt = makeLetterEditor("create_wizard", "cw_insert_input_pt", "cw_insert_option_pt",
+							{
+								have_heading: true,
+								have_reply_to: false,
+								big: false,
+								can_split: false,
+								is_edit: false,
+								no_preview: true,
+								simplified_option: true,
+							});
+			$("#create_wizard").hide();
+		}
+		HeartsOverlay.prototype.onAdd = function () {
+		}
+		HeartsOverlay.prototype.draw = function () {
+		}
+	</script>
+}

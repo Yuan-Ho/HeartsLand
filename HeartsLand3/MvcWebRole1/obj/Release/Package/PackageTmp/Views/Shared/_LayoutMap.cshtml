@@ -1,0 +1,103 @@
+﻿@{
+	Layout = "~/Views/Shared/_LayoutLand.cshtml";
+}
+@section PageMeta
+{
+	<meta name="viewport" content="height=device-height, initial-scale=1, user-scalable=no" />
+	@Styles.Render("~/Content/hearts_map")
+	@RenderSection("PageMeta", false)
+}
+<div id="mb_shadow_body"></div>
+<div id="map_canvas"></div>
+<div id="mb_left_side" class="above_map"></div>
+<div id="mb_bottom_side" class="above_map"></div>
+<div id="mb_blc_up_tri" class="above_map"></div>
+<div id="mb_blc_down_tri" class="above_map"></div>
+<div id="mb_top_left_corner" class="above_map"></div>
+<div id="mb_bottom_right_corner" class="above_map"></div>
+
+<div id="shortcut_panel" class="above_map">
+	<svg width="100%" height="100%">
+		<image x="7" xlink:href="~/images/cloud_yellow_paper.gif" width="787" height="485" filter="url(#drop-shadow)" />
+	</svg>
+	<nav>
+		<h3>@HeartsConfiguration.SITE_NAME</h3>
+		<p>
+			<a href="/" target="/">回首頁</a><s>| </s>
+			<a data-link="board">回留言板</a><s>| </s>
+			<a data-link="create_discussion">開新主題</a><s>| </s>
+			<a data-link="create_map_discussion">開新地圖主題</a><s>| </s>
+		</p>
+		@RenderSection("Shortcut")
+		<p class="put_center">
+			<a class="c_passage" onclick="toggleShortcut();">選單</a>
+		</p>
+	</nav>
+</div>
+<svg width="0" height="0" class="pos_absolute">
+	<defs>
+		<filter id="drop-shadow">
+			<feGaussianBlur in="SourceAlpha" stdDeviation="1" result="blurred_alpha" />
+			<feFlood flood-color="rgb(36,9,1)" flood-opacity="1" />
+			<feComposite in2="blurred_alpha" operator="in" result="brown_edge" />
+
+			<feOffset dx="-5" dy="6" in="blurred_alpha" result="offsetblur" />
+			<feFlood flood-color="black" flood-opacity="0.8" />
+			<feComposite in2="offsetblur" operator="in" result="gray_shadow" />
+
+			<feMerge>
+				<feMergeNode in="gray_shadow" />
+				<feMergeNode in="brown_edge" />
+				<feMergeNode in="SourceGraphic" />
+			</feMerge>
+		</filter>
+		<filter id="orange-light">
+			<feGaussianBlur in="SourceAlpha" stdDeviation="1.5" result="blurred_more" />
+			<feFlood flood-color="orange" flood-opacity="0.6" />
+			<feComposite in2="blurred_more" operator="in" result="orange_light" />
+
+			<feGaussianBlur in="SourceAlpha" stdDeviation="1" result="blurred_between" />
+			<feFlood flood-color="black" flood-opacity="0.8" />
+			<feComposite in2="blurred_between" operator="in" result="black_light" />
+
+			<feGaussianBlur in="SourceAlpha" stdDeviation="0.5" result="blurred_less" />
+			<feFlood flood-color="white" flood-opacity="0.8" />
+			<feComposite in2="blurred_less" operator="in" result="white_light" />
+
+			<feMerge>
+				<feMergeNode in="orange_light" />
+				<feMergeNode in="black_light" />
+				<feMergeNode in="white_light" />
+				<feMergeNode in="SourceGraphic" />
+			</feMerge>
+		</filter>
+		<filter id="gray-light">
+			<feGaussianBlur in="SourceAlpha" stdDeviation="1.5" result="blurred_more" />
+			<feFlood flood-color="orange" flood-opacity="0.6" />
+			<feComposite in2="blurred_more" operator="in" result="orange_light" />
+
+			<feGaussianBlur in="SourceAlpha" stdDeviation="1" result="blurred_between" />
+			<feFlood flood-color="black" flood-opacity="0.8" />
+			<feComposite in2="blurred_between" operator="in" result="black_light" />
+
+			<feMerge>
+				<feMergeNode in="orange_light" />
+				<feMergeNode in="black_light" />
+				<feMergeNode in="SourceGraphic" />
+			</feMerge>
+		</filter>
+	</defs>
+</svg>
+
+@RenderBody()
+
+@section Menu
+{
+	@RenderSection("Menu")
+}
+@section PageScript
+{
+	<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDOhtNYloLqP-1yCHqxjyqTAD3uWSJmAds&sensor=false"></script>
+	@Scripts.Render("~/bundles/hearts_map")
+	@RenderSection("PageScript")
+}

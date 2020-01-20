@@ -1,0 +1,10 @@
+﻿	<meta property="og:site_name" content="@HeartsConfiguration.SITE_NAME" />
+	<meta property="og:type" content="article" />
+	<meta property="og:url" content="@ViewBag.CurrentPageUrl"/>
+	<meta property="og:title" content="@ViewBag.DiscussionLoadRoll.Heading"/>
+	<meta property="og:description" content="@ViewBag.DiscussionLoadRoll.Description"/>
+	<meta property="fb:app_id" content="788545127852625" />
+	@foreach (string img_url in ViewBag.DiscussionLoadRoll.OgImages)
+ {
+		<meta property="og:image" content="@img_url"/>
+ }

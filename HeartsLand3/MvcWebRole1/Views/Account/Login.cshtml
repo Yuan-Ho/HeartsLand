@@ -1,0 +1,93 @@
+﻿@{
+	ViewBag.Title = "登入 " + HeartsConfiguration.SITE_NAME;
+	Layout = "~/Views/Shared/_LayoutHorizontal.cshtml";
+}
+<form data-wrap="room_table" data-wrap-id="step2">
+	<p class="createinprocess">正在連絡伺服器…</p>
+	<section class="createsuccess">
+		<p>恭喜您！登入成功！</p>
+		<p>
+			<label class='wizard'>使用者名稱：</label><span id="suc_user_name"></span></p>
+		<p>任何時候按下”登出”您的使用者帳戶就會被登出，下次再訪問本網站都須再次登入，不受”記住我”的影響。</p>
+		<p>請按”回首頁”以回到首頁。</p>
+	</section>
+	<p class="createfail error_info">登入失敗。錯誤訊息："<span id="createfailmsg"></span>"</p>
+	<p>
+		<input class="createfail" type="button" value="重試" onclick="location.reload();" />
+		<input type="button" value="回首頁" onclick="location.assign('/');" />
+		<input type="button" value="記憶密碼" onclick="history.back();/*offerRememberPassword();*/" id="remember_btn" class="not_show" />
+	</p>
+</form>
+
+<form data-wrap="room_table" data-wrap-id="step1" onsubmit="doLogin(); wizardNextStep(1); return false;">
+	<p>感謝登入！請在下列表單填入您的"使用者名稱"及"密碼"。</p>
+	<p>如果您沒有使用者帳戶，請點<a class="passage rocky_bg" href="/account/register">這裡</a>到註冊頁面進行註冊。</p>
+	<p>若勾選"記住我"，一週內此台電腦會保持在登入狀態，再訪問本網站毋須再次登入。</p>
+	<p>若不勾選"記住我"，登入狀態只保持到瀏覽器關閉即結束，下次再訪問本網站時須再次登入。</p>
+	<p>
+		<label class='wizard' for="UserName">使用者名稱：</label><input id="UserName" type="text" /></p>
+	<p>
+		<label class='wizard' for="Password">密碼：</label><input id="Password" type="password" /></p>
+	<p>
+		<label class="wizard" for="RememberMe">記住我：</label><input id="RememberMe" type="checkbox" /></p>
+	<p>
+		<input type="submit" value="登入" />
+		<input type="button" value="取消" onclick="location.assign('/');" />
+	</p>
+</form>
+@section Menu {
+}
+@section PageScript {
+	<script>
+		function pagePrepare() {
+			$('#UserName').focus();
+
+			$("#step2").css("visibility", "hidden");
+		}
+		function doLogin() {
+			return;		//20150924 stop using sql server
+
+			var username = $('#UserName').val();
+			var pwd = $('#Password').val();
+			var m_id = localStorage["m_id"];
+			var remember_me = $('#RememberMe').prop("checked");
+
+			$(".createsuccess").hide();
+			$(".createfail").hide();
+
+			postGoods("/account/ajaxlogin",
+				{
+					UserName: username,
+					Password: pwd,
+					RememberMe: remember_me,
+					m_id: m_id,
+				},
+				function (suc, response) {
+					$(".createinprocess").hide();
+
+					if (suc && response.ok) {
+						$("#suc_user_name").text(username);
+						$(".createsuccess").show();
+
+						if (isChrome())
+							$("#remember_btn").removeClass("not_show");
+					}
+					else {
+						$("#createfailmsg").text(response);
+						$(".createfail").show();
+					}
+				});
+		}
+		function offerRememberPassword() {
+			var username = $('#UserName').val();
+			var pwd = $('#Password').val();
+
+			var html = "<form action='/account/rth' method='post'>\
+						<input name='UserName' type='text' value='" + username + "' />\
+						<input id='Password' type='password' value='" + pwd + "'/>\
+					</form>";
+
+			$(html).submit();
+		}
+	</script>
+}

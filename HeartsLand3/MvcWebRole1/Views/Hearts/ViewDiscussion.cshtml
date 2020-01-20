@@ -1,0 +1,70 @@
+﻿@{
+	Layout = "~/Views/Shared/_LayoutHorizontal.cshtml";
+}
+@section PageMeta
+{
+	@Html.Partial("FacebookMeta")
+}
+@section Storey2
+{
+	<div id="pre_discussionload" class="preload_not_show">@Html.Raw(ViewBag.DiscussionLoadRoll.Output)</div>
+	<script>var pre_boardsetting=@{Html.RenderAction("BoardSetting");};</script>
+	<ins id="insert_point_2"></ins>
+}
+<table data-wrap="room_table" data-wrap-id="edit_wizard">
+	<tr>
+		<td class="layout_only">
+			<form>
+				<ins id="ew_insert_input_pt"></ins>
+				<p class="error_info">編輯留言失敗。錯誤訊息："<span></span>"</p>
+				<p>
+					<input type="button" value="確定編輯" onclick="doEditLetter(this);" />
+					<input type="button" value="取消" onclick="edit_wizard_elt.hide();" />
+				</p>
+			</form>
+		</td>
+		<td class="layout_only">
+			<form class="tbrl">
+				<ins id="ew_insert_option_pt"></ins>
+			</form>
+		</td>
+	</tr>
+</table>
+
+<table data-wrap="room_table" data-wrap-id="create_wizard">
+	<tr>
+		<td class="layout_only">
+			<form>
+				<ins id="cw_insert_input_pt"></ins>
+				<p class="error_info">加新留言失敗。錯誤訊息："<span></span>"</p>
+				<p>
+					<input type="button" value="確定留言" onclick="doCreateLetter(this);" />
+					<input type="button" value="取消" onclick="create_wizard_elt.hide();" />
+				</p>
+			</form>
+		</td>
+		<td class="layout_only">
+			<form class="tbrl">
+				<ins id="cw_insert_option_pt"></ins>
+			</form>
+		</td>
+	</tr>
+</table>
+
+<nav class="tbrl" data-wrap="room_table_interval">
+	<a class="passage rocky_bg" onclick="create_wizard_elt.showCreate();">加新留言</a>
+	<a class="passage rocky_bg not_show" id="show_deleted_btn" onclick="showDeleted();">顯示所有留言</a>
+	<a class="passage rocky_bg" onclick="facebookShare('@ViewBag.CurrentPageUrl');">FACEBOOK分享</a>
+	<a class="passage rocky_bg" id="refresh_btn" onclick="refreshDiscussionLoad('#last');">更新</a>
+</nav>
+
+<ins id="insert_point"></ins>
+@section Menu {
+	@Html.Partial("DiscussionMenu")
+	<li><a onclick="create_wizard_elt.showCreate();">加新留言</a></li>
+	<li id="reply_to_menu"><a onclick="replyToLetter();">回應此留言</a></li>
+	<li><a data-link="board">回留言板</a></li>
+}
+@section PageScript {
+	@Scripts.Render("~/bundles/ViewDiscussion")
+}

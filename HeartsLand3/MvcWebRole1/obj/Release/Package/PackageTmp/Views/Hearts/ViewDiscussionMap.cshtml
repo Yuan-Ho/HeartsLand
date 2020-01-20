@@ -1,0 +1,58 @@
+﻿@{
+	Layout = "~/Views/Shared/_LayoutMap.cshtml";
+}
+@section PageMeta
+{
+	@Html.Partial("FacebookMeta")
+}
+<div id="pre_discussionload" class="preload_not_show">@Html.Raw(ViewBag.DiscussionLoadRoll.Output)</div>
+<script>var pre_boardsetting=@{Html.RenderAction("BoardSetting");};</script>
+
+<form id="edit_wizard" class="m_wizard above_map">
+	<ins id="ew_insert_input_pt"></ins>
+	<p class="error_info">編輯留言失敗。錯誤訊息："<span></span>"</p>
+	<p>
+		<input type="button" value="確定編輯" autocomplete="off" onclick="doEditLetter(this);" />
+		<input type="button" value="取消" onclick="cancelCreateLetter();" />
+		<ins id="ew_insert_option_pt"></ins>
+	</p>
+</form>
+
+<form id="create_wizard" class="m_wizard above_map">
+	<ins id="cw_insert_input_pt"></ins>
+	<p class="error_info">加新留言失敗。錯誤訊息："<span></span>"</p>
+	<p>
+		<input type="button" value="確定留言" autocomplete="off" onclick="doCreateLetter(this);" />
+		<input type="button" value="取消" onclick="cancelCreateLetter();" />
+		<ins id="cw_insert_option_pt"></ins>
+	</p>
+</form>
+
+<nav class="carry_panel above_map">
+	<a class="passage rocky_bg" id="refresh_btn" onclick="refreshDiscussionLoad('#last');">更新</a>
+	<div id="letter_slider_box">
+		<label class='wizard'>留言：</label><span>1</span> <button>-</button><div id="letter_slider"></div><button>+</button> <span>1</span>
+	</div>
+</nav>
+
+@section Shortcut
+{
+	<p>
+		<ins id="insert_point"></ins>
+	</p>
+	<h3>功能</h3>
+	<p>
+		<a data-link="discussion">文字檢視</a><s>| </s>
+		<a onclick="goGoogleMap();">以Google地圖檢視此地點</a><s>| </s>
+		<a onclick="facebookShare('@ViewBag.CurrentPageUrl');">FACEBOOK分享</a><s>| </s>
+	</p>
+}
+@section Menu
+{
+	@Html.Partial("DiscussionMenu")
+	<li><a data-link="board">回留言板</a></li>
+}
+@section PageScript
+{
+	@Scripts.Render("~/bundles/ViewDiscussionMap")
+}

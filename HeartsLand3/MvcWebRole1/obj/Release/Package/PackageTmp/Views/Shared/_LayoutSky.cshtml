@@ -1,0 +1,37 @@
+﻿@{
+	Layout = "~/Views/Shared/_LayoutLand.cshtml";
+}
+@section PageMeta
+{
+	<meta name="viewport" content="height=device-height, initial-scale=1, user-scalable=no" />
+	@Styles.Render("~/Content/hearts_sky")
+	@RenderSection("PageMeta", false)
+}
+<div id="map_canvas">
+	<div class="sky_hole"></div>
+	<div id="sticker_pane">
+		@RenderBody()
+	</div>
+	@RenderSection("CloudLinks")
+	<div class="sky_passage absolute-center"><a class="hover_move d_passage" data-link2="discussion"></a></div>
+	<div class="sky_passage absolute-center"><a class="hover_move d_passage" data-link2="board">回留言板</a></div>
+	<div class="sky_passage absolute-center"><a class="hover_move d_passage" data-href="/">@HeartsConfiguration.SITE_NAME</a></div>
+</div>
+
+@section HelpContent
+{
+	@RenderSection("HelpContent", false)
+}
+@section Menu
+{
+	@RenderSection("Menu")
+}
+@section GlobalMenu
+{
+	@RenderSection("GlobalMenu")
+}
+@section PageScript
+{
+	@Scripts.Render("~/bundles/hearts_sky")
+	@RenderSection("PageScript")
+}

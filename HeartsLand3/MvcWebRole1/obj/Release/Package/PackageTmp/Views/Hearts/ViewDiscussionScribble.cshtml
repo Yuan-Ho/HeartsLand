@@ -1,0 +1,70 @@
+﻿@{
+	Layout = "~/Views/Shared/_LayoutLand.cshtml";
+}
+@section PageMeta
+{
+	<meta name="viewport" content="height=device-height, initial-scale=1, user-scalable=no" />
+	@Styles.Render("~/Content/scribble_3rd_party", "~/Content/hearts_scribble")
+	@Html.Partial("FacebookMeta")
+}
+<div id="pre_discussionload" class="preload_not_show">@Html.Raw(ViewBag.DiscussionLoadRoll.Output)</div>
+<script>var pre_boardsetting=@{Html.RenderAction("BoardSetting");};</script>
+
+<div id="map_canvas">
+	<input type='file' class='ui-helper-hidden-accessible' id='poser_chooser' accept='image/*' onchange="onPoserChosen(event);"/>
+	<img id="chosen_poser" class="not_show" draggable="false" onload="onPoserLoad(event);" />
+	<div id="sticker_pane" class="full_size">
+		<ins id="insert_point"></ins>
+	</div>
+	<div id="scribble_container" class="full_size">
+		<canvas id="scribble_canvas" class="full_size" data-paper-resize="true"></canvas>
+		<canvas id="tool_canvas" class="full_size" data-paper-resize="true"></canvas>
+	</div>
+
+	<div class="bottom_passage absolute-center"><a class="hover_move c_passage glbl_menu">選單</a></div>
+	<div class="bottom_passage absolute-center"><a class="hover_move c_passage" id="help_btn">使用說明</a></div>
+
+	<div class="left_passage absolute-center"><a class="hover_move c_passage" onclick="scribbleHand();" id="hand_btn">移動(H,空白鍵)</a></div>
+	<div class="left_passage absolute-center"><a class="hover_move c_passage" onclick="scribbleTipSize();">筆尺寸(S)</a></div>
+	<div class="left_passage absolute-center"><a class="hover_move c_passage" onclick="scribblePen();" id="pen_btn">鉛筆(P)</a></div>
+	<div class="left_passage absolute-center"><a class="hover_move c_passage" onclick="scribbleBrush();" id="brush_btn">筆刷</a></div>
+	<div class="left_passage absolute-center"><a class="hover_move c_passage" onclick="scribbleColor(event, true);" id="color_btn">顏色(C)</a></div>
+	<div class="left_passage absolute-center"><a class="hover_move c_passage" onclick="scribbleEraser();" id="eraser_btn">橡皮擦(E)</a></div>
+	<div class="left_passage absolute-center"><a class="hover_move c_passage" onclick="scribbleDropper();" id="dropper_btn">滴管(I)</a></div>
+	<div class="left_passage absolute-center"><a class="hover_move c_passage" onclick="scribbleUndo();">復原(Z)</a></div>
+	<div class="left_passage absolute-center"><a class="hover_move c_passage" onclick="scribbleRedo();">取消復原(Y)</a></div>
+	<div class="left_passage absolute-center"><a class="hover_move c_passage" onclick="scribblePoser();" id="poser_btn">貼圖(O)</a></div>
+	<div class="left_passage absolute-center"><a class="hover_move c_passage" onclick="scribbleText();">文字</a></div>
+
+	<div class="top_passage absolute-center"><a class="hover_move d_passage" data-link2="discussion">標題</a></div>
+	<div class="top_passage absolute-center"><a class="hover_move d_passage" data-link2="board">回留言板</a></div>
+	<div class="top_passage absolute-center"><a class="hover_move d_passage" data-href="/">@HeartsConfiguration.SITE_NAME</a></div>
+
+	<div id="color_pane" class="not_show">
+		<input id="color_input" type="hidden"/>
+		<div id="color_buttons">
+			<button id="clr_ok_btn" class="d_passage" onclick="scribbleColor(event, false);">確定</button>
+			<button id="clr_cancel_btn" class="d_passage" onclick="scribbleColor(event, false, true);">取消</button>
+		</div>
+	</div>
+	<div id="floating_info" class="absolute-center"></div>
+</div>
+
+@section HelpContent
+{
+}
+@section Menu
+{
+	@Html.Partial("DiscussionMenu")
+	<li><a data-link="board">回留言板</a></li>
+}
+@section GlobalMenu
+{
+	<li><a data-link="discussion">文字檢視</a></li>
+	<li><a onclick="facebookShare('@ViewBag.CurrentPageUrl');">FACEBOOK分享</a></li>
+	<li><a data-link="board">回留言板</a></li>
+}
+@section PageScript
+{
+	@Scripts.Render("~/bundles/scribble_3rd_party", "~/bundles/ViewDiscussionScribble")
+}

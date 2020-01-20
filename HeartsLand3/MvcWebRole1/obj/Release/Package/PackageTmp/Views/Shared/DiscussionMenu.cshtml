@@ -1,0 +1,37 @@
+﻿	<li>
+		<a>板主</a>
+		<ul id="board_owner_menu">
+			<li data-action="edit"><a>編輯留言</a></li>
+			<li data-action="delete"><a>刪除留言</a></li>
+		</ul>
+	</li>
+	<li>
+		<a>串主</a>
+		<ul id="discussion_creator_menu">
+			<li data-action="edit"><a>編輯留言</a></li>
+			<li data-action="delete" data-auth="nbod"><a>刪除留言</a></li>
+		</ul>
+	</li>
+	<li>
+		<a>原作者</a>
+		<ul id="letter_creator_menu">
+			<li data-action="edit"><a>編輯留言</a></li>
+			<li data-action="permanent_delete"><a>永久刪除留言</a></li>
+		</ul>
+	</li>
+	<li>
+		<a>未登入作者</a>
+		<ul id="lau_letter_creator_menu">
+			<li data-action="edit"><a>編輯留言</a></li>
+			<li data-action="permanent_delete"><a>永久刪除留言</a></li>
+		</ul>
+	</li>
+	<li>
+		<a>非原作者</a>
+		<ul id="not_letter_creator_menu">
+			<li data-action="report"><a>檢舉留言</a></li>
+			<li data-action="prosecute"><a>先斬後奏留言</a></li>
+		</ul>
+	</li>
+	<li><a onclick="voteLetter(MT_ILI);"><img src="~/Images/light_white.png" />讚</a></li>
+	<li><a onclick="voteLetter(MT_IDLI);"><img src="~/Images/light_black.png" />噓</a></li>

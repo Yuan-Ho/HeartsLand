@@ -1,0 +1,132 @@
+﻿@{
+	ViewBag.Title = "開新區域 " + HeartsConfiguration.SITE_NAME;
+	Layout = "~/Views/Shared/_LayoutHorizontal.cshtml";
+}
+<form data-wrap="room_table" data-wrap-id="step5">
+	<p class="createinprocess">正在連絡伺服器…</p>
+	<section class="createsuccess">
+		<p>恭喜您！開新區域成功！</p>
+		<p>
+			<label class='wizard'>新區域ID：</label><span id="newselectionid"></span></p>
+		<p>請按”前往”以前往新開好的區域，或按”回首頁”以回到首頁。</p>
+	</section>
+	<p class="createfail error_info">開區失敗。錯誤訊息："<span id="createfailmsg"></span>"</p>
+	<p>
+		<input class="createfail" type="button" value="重試" onclick="location.reload();" />
+		<input class="createsuccess" id="gonewselection" type="button" value="前往" />
+		<input type="button" value="回首頁" onclick="location.assign('/');" />
+	</p>
+</form>
+
+<form data-wrap="room_table" data-wrap-id="step4">
+	<p>您為新區域取的名字是"<span id="final_selection_name">區</span>"。</p>
+	<p>所需資料皆已蒐集完畢。請按”繼續”連絡伺服器進行開區，或按”取消”回到首頁。</p>
+	<p>
+		<input type="button" value="繼續" onclick="doCreateSelection(); wizardNextStep(4);" />
+		<input type="button" value="取消" onclick="location.assign('/');" />
+	</p>
+</form>
+
+<form data-wrap="room_table" data-wrap-id="step3" onsubmit="wizardNextStep(3); return false;">
+	<p>請幫忙輸入驗證碼。</p>
+	<p>驗證碼可以區分機器或真人，用來防止機器自動灌水。</p>
+	<div id="recaptcha_div"></div>
+	<p>
+		<input type="submit" value="繼續" />
+		<input type="button" value="取消" onclick="location.assign('/');" />
+	</p>
+</form>
+
+<form data-wrap="room_table" data-wrap-id="step2" onsubmit="nameDetermined(); return false;">
+	<p>請為您的區域取一個名字！區名結尾將自動被加上”區”字。不計”區”字的長度請在2到18字之間。</p>
+	<p>每個區域都以伺服器指派的一組ID（英文字母"s"加上一個數字，如"s1001"）識別。</p>
+	<p>區域建立後區名依然可以修改。輸入完成請按”繼續”。</p>
+
+	<ins id="insert_input_pt"></ins>
+	<p>
+		<label class='wizard'>預覽區名：</label><span id="preview_selection_name">區</span>
+	</p>
+	<p>
+		<input type="submit" value="繼續" />
+		<input type="button" value="取消" onclick="location.assign('/');" />
+	</p>
+</form>
+
+<form data-wrap="room_table" data-wrap-id="step1">
+	<p>歡迎開新區域！區域是留言板的群組。</p>
+	<p>常常在多個留言板間跑來跑去，覺的很麻煩嗎？建立一個區域把您有興趣的留言板都加進來吧。</p>
+	<p>若欲繼續請按”繼續”，若欲回到首頁請按”取消”。</p>
+	<p>
+		<input type="button" value="繼續" onclick="wizardNextStep(1); $('#new_selection_name').focus();" />
+		<input type="button" value="取消" onclick="location.assign('/');" />
+	</p>
+</form>
+
+@section Menu {
+}
+@section PageScript {
+	<script>
+		function pagePrepare() {
+			makePlainInput({
+				id: "new_selection_name",
+				name: "區域名",
+				max_len: BOARD_NAME_FIELD_MAX_LEN,
+				min_len: BOARD_NAME_FIELD_MIN_LEN,
+				size: 24,
+				default_value: "",
+				validate: "user_name",
+				insert_before: "insert_input_pt"
+			});
+
+			$("#step2").css("visibility", "hidden");
+			$("#step3").css("visibility", "hidden");
+			$("#step4").css("visibility", "hidden");
+			$("#step5").css("visibility", "hidden");
+			//
+			$("#new_selection_name").on("input", function () {
+				setTimeout(function () {
+					$("#preview_selection_name").text($("#new_selection_name").val() + "區");
+				}, 0);
+			});
+		}
+		function doCreateSelection() {
+			var selectionname = $('#new_selection_name').val();
+
+			$(".createsuccess").hide();
+			$(".createfail").hide();
+
+			var post_data = {
+				selection_name: selectionname,
+				recaptcha_challenge_field: Recaptcha.get_challenge(),
+				recaptcha_response_field: Recaptcha.get_response(),
+			};
+			postGoods("/createselection", post_data, function (suc, response) {
+				$(".createinprocess").hide();
+
+				if (suc && response.selection_id) {
+					$("#newselectionid").text(response.selection_id);
+					$("#gonewselection").click(function () {
+						location.assign('/' + response.selection_id);
+					});
+					$(".createsuccess").show();
+				}
+				else {
+					$("#createfailmsg").text(response);
+					$(".createfail").show();
+				}
+			});
+		}
+		function nameDetermined() {
+			if (checkPlainInput($('#new_selection_name'))) {
+				$('#final_selection_name').text($("#new_selection_name").val() + "區");
+
+				Recaptcha.create(ReCaptchaPublicKey, "recaptcha_div",
+					{
+						theme: "clean",
+						callback: captchaLoaded
+					});
+				wizardNextStep(2);
+			}
+		}
+	</script>
+}

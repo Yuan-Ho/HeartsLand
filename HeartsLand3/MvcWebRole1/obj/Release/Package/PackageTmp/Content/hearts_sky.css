@@ -1,0 +1,136 @@
+﻿html {
+	height: 100%;
+}
+
+body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	//background-color: rgb(248, 255, 216);
+	//background-color: rgb(238, 244, 255);
+	background-color: rgb(224, 236, 255);
+}
+
+#map_canvas {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	top: 0px;
+	left: 0px;
+	overflow: hidden;
+	cursor: url(../images/openhand_8_8.cur), default;
+	/*height: 90%;
+	width: 90%;
+	top: 5%;
+	left: 5%;*/
+	-webkit-user-select: none; /*user select text interferes with mouse panning*/
+	-ms-user-select: none;
+	-moz-user-select: none;
+}
+
+	#map_canvas.dragging {
+		cursor: url(../images/closedhand_8_8.cur), move;
+	}
+
+#sticker_pane {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	top: 0px;
+	left: 0px;
+	transform-origin: 0px 0px 0px;
+	//border: 1px solid green;
+}
+
+div.storey {
+	position: absolute;
+	background-clip: padding-box;
+	//background-color: rgba(242, 242, 255, .96);
+	//border: 20px solid rgba(242, 242, 255, .96);
+	//box-shadow: 0px 0px 25px 25px rgba(242, 242, 255, 0.96);
+	//outline: 15px solid rgba(242, 242, 255, .5);
+	background-color: rgba(255, 232, 124, .96);
+	border-color: rgba(255, 232, 124, .96);
+	border-width: 20px;
+	border-style: solid;
+	//border: 20px solid rgba(255, 232, 124, .96);
+	//color: white;
+}
+
+#sticker_pane > table.room {
+	position: absolute;
+}
+
+td.room_base {
+	border-color: white;
+	background-color: lightgray;
+}
+
+.is_subject td.room_base {
+	border-color: white;
+	background-color: gray;
+}
+
+	.is_subject td.room_base:hover {
+		background-color: white;
+	}
+
+#anchor_box1 {
+	position: absolute;
+	height: 100px;
+	width: 100px;
+	left: 0px;
+	top: 0px;
+	border: 1px solid red;
+	z-index: 1;
+}
+
+input:checked + label.opra {
+	background: url('../images/Jade-radio-sun.gif') no-repeat 0px 0px;
+}
+
+input:not(:checked) + label.opra {
+	background: url('../images/Jade-frame-sun.gif') no-repeat 0px 0px;
+}
+
+a.cloud_ground {
+	display: block;
+	position: fixed;
+	width: 301px;
+	top: calc(98% - 89px); /*89px is height of lying_cloud.png.*/
+	height: 89px;
+	line-height: 89px;
+	text-align: center;
+	vertical-align: middle;
+	background-image: url(../images/lying_cloud.png);
+	background-repeat: no-repeat;
+}
+
+	a.cloud_ground:hover {
+		border-left: 3px solid transparent;
+		border-top: 3px solid transparent;
+	}
+
+	a.cloud_ground:active {
+		border-style: none;
+	}
+
+div.sky_hole {
+	display: block;
+	position: fixed;
+	border-radius: 50%;
+	border: 5px solid rgb(255, 232, 124);
+	top: 2%;
+	left: calc(50% - 35px);
+	width: 70px;
+	height: 70px;
+	background-image: url(../images/pavilion.gif);
+
+	//box-shadow: inset 0px 0px 7px 5px rgba(0,0,0,0.7);
+}
+div.sky_passage {
+	position: fixed;
+	top: 2%;
+	width: 15em;
+	height: 80px; /*To contain the sky_hole completely.*/
+}

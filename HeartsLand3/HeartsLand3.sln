@@ -1,0 +1,47 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "HeartsLand3", "HeartsLand3\HeartsLand3.ccproj", "{43DF72FB-2C37-4276-BE53-7B2036E1D9C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcWebRole1", "MvcWebRole1\MvcWebRole1.csproj", "{38AF4E25-6C2E-4A0D-839A-08F2B2DDF11F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcWebRole1.Tests", "MvcWebRole1.Tests\MvcWebRole1.Tests.csproj", "{D7E63BD1-64F5-417F-8FFE-3D4791ACFEF3}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 4
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://hl1.visualstudio.com/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = HeartsLand3\\HeartsLand3.ccproj
+		SccProjectName1 = HeartsLand3
+		SccLocalPath1 = HeartsLand3
+		SccProjectUniqueName2 = MvcWebRole1.Tests\\MvcWebRole1.Tests.csproj
+		SccProjectName2 = MvcWebRole1.Tests
+		SccLocalPath2 = MvcWebRole1.Tests
+		SccProjectUniqueName3 = MvcWebRole1\\MvcWebRole1.csproj
+		SccProjectName3 = MvcWebRole1
+		SccLocalPath3 = MvcWebRole1
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{43DF72FB-2C37-4276-BE53-7B2036E1D9C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43DF72FB-2C37-4276-BE53-7B2036E1D9C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43DF72FB-2C37-4276-BE53-7B2036E1D9C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43DF72FB-2C37-4276-BE53-7B2036E1D9C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38AF4E25-6C2E-4A0D-839A-08F2B2DDF11F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38AF4E25-6C2E-4A0D-839A-08F2B2DDF11F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38AF4E25-6C2E-4A0D-839A-08F2B2DDF11F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38AF4E25-6C2E-4A0D-839A-08F2B2DDF11F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7E63BD1-64F5-417F-8FFE-3D4791ACFEF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7E63BD1-64F5-417F-8FFE-3D4791ACFEF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7E63BD1-64F5-417F-8FFE-3D4791ACFEF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7E63BD1-64F5-417F-8FFE-3D4791ACFEF3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

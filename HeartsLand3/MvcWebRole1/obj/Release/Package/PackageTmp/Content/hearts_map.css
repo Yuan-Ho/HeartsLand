@@ -1,0 +1,216 @@
+﻿html {
+	height: 100%;
+}
+
+body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	background-color: rgb(240, 232, 255);
+}
+
+#map_canvas {
+	position: absolute;
+	height: 90%;
+	width: 90%;
+	top: 5%;
+	left: 5%;
+}
+
+/*#light_body {
+	position: absolute;
+	height: calc(90% - 9px);
+	width: calc(90% - 9px);
+	top: 5%;
+	left: calc(5% + 9px);
+	box-shadow: inset -1px 1px 1px 0px rgba(255,255,255,.5);
+}*/
+
+/*map box*/
+
+#mb_left_side {
+	position: absolute;
+	top: 5%;
+	left: 5%;
+	height: calc(90% - 10px);
+	width: 10px;
+	background-color: rgba(0,0,0,0.3);
+}
+
+#mb_bottom_side {
+	position: absolute;
+	top: calc(95% - 10px);
+	left: calc(5% + 10px);
+	height: 11px;
+	width: calc(90% - 10px);
+	background-color: rgba(0,0,0,0.5);
+}
+
+#mb_blc_up_tri {
+	position: absolute;
+	width: 0;
+	height: 0;
+	top: calc(95% - 10px);
+	left: 5%;
+	border-style: solid;
+	border-width: 10px 10px 0 0;
+	border-color: rgba(0,0,0,0.3) transparent transparent transparent;
+}
+
+#mb_blc_down_tri {
+	position: absolute;
+	width: 0;
+	height: 0;
+	top: calc(95% - 9px);
+	left: 5%;
+	border-style: solid;
+	border-width: 0 0 10px 10px;
+	border-color: transparent transparent rgba(0,0,0,0.5) transparent;
+}
+
+#mb_top_left_corner {
+	position: absolute;
+	width: 0;
+	height: 0;
+	top: 5%;
+	left: 5%;
+	border-style: solid;
+	border-width: 10px 10px 0 0;
+	border-color: rgb(240, 232, 255) transparent transparent transparent;
+}
+
+#mb_bottom_right_corner {
+	position: absolute;
+	width: 0;
+	height: 0;
+	top: calc(95% - 10px);
+	left: calc(95% - 10px);
+	border-style: solid;
+	border-width: 0 0 11px 11px;
+	border-color: transparent transparent rgb(240, 232, 255) transparent;
+}
+
+#mb_shadow_body {
+	position: absolute;
+	height: calc(90% - 10px);
+	width: calc(90% - 10px);
+	top: calc(5% + 10px);
+	left: 5%;
+	box-shadow: -15px 15px 7px 0px rgba(0,0,0,0.2);
+}
+
+#create_wizard {
+	position: absolute;
+}
+
+#edit_wizard {
+	position: absolute;
+}
+
+form.m_wizard {
+	//width: 27em;
+}
+
+div.sticker {
+	position: absolute;
+	margin: 0;
+	width: 20em;
+	color: white;
+	white-space: pre-wrap;
+	font-size: small;
+	text-shadow: 0px 0px 2px black, 0px 0px 4px white, 0px 0px 6px black, 0px 0px 10px orange;
+	-webkit-transform: translateZ(0px);
+	word-wrap: break-word; /*For very long English words.*/
+}
+
+	div.sticker > p {
+		margin: 0em;
+		text-align: center;
+	}
+
+		div.sticker > p svg {
+			vertical-align: middle;
+			margin: .3em;
+		}
+
+	div.sticker a.passage {
+		max-width: 20em; /*same as div.sticker*/
+	}
+
+	div.sticker > strong {
+		cursor: pointer;
+	}
+
+		div.sticker > strong:hover {
+			font-size: large;
+		}
+
+	div.sticker mark { /*to override user agent stylesheet*/
+		background-color: transparent;
+		color: white;
+	}
+
+#shortcut_panel {
+	position: absolute;
+	left: 55%;
+	width: 35%;
+	z-index: 0;
+	transition-duration: 0.5s;
+	transition-property: top;
+	transition-timing-function: ease-out;
+	min-width: 25em;
+}
+
+	#shortcut_panel nav {
+		padding: 0em 30px .3em 60px;
+	}
+
+	#shortcut_panel svg {
+		position: absolute;
+		z-index: -1;
+	}
+
+#shortcut_panel {
+	color: #493D26;
+}
+
+	#shortcut_panel s {
+		color: #493D26;
+	}
+
+.put_center {
+	text-align: center;
+}
+
+nav.carry_panel {
+	position: absolute; /*to make the nav above map.*/
+	margin: .5em;
+	display: inline-block;
+}
+
+#letter_slider {
+	display: inline-block;
+	width: 25em;
+	margin-left: 1em;
+	margin-right: 2em;
+}
+
+	#letter_slider.ui-widget-content {
+		border: 1px solid indigo;
+		background-color: white;
+	}
+
+#letter_slider_box {
+	display: inline-block;
+}
+
+#letter_slider > a {
+	padding-left: .5em;
+	padding-right: .5em;
+	text-align: center;
+	width: auto;
+}
+
+.above_map {
+	-webkit-transform: translateZ(0px);
+}

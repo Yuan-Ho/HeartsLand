@@ -1,0 +1,122 @@
+﻿@{
+	ViewBag.Title = HeartsConfiguration.SITE_NAME;
+	Layout = "~/Views/Shared/_LayoutHorizontal.cshtml";
+}
+@section Storey2 {
+	<div id="pre_boardlist" class="preload_not_show">@{Html.RenderAction("BoardList");}</div>
+	<div id="pre_sldsummary" class="preload_not_show">@{Html.RenderAction("SldSummary");}</div>
+
+	<nav class="tbrl" data-wrap="room_table">
+		<a class="passage rocky_bg">鎮江石</a>
+		<ins id="insert_boards_point"></ins>
+		<a class="passage rocky_bg" href="/createboard" target="/createboard">開新留言板</a>
+	</nav>
+
+	<ins id="insert_boards_banner"></ins>
+
+	<nav class="tbrl" data-wrap="room_table">
+		<ins id="insert_selections_point"></ins>
+		<a class="passage rocky_bg" href="/createselection" target="/createselection">開新區域</a>
+	</nav>
+
+	<ins id="insert_selections_banner"></ins>
+}
+<nav class="tbrl" data-wrap="room_table_interval">
+	<a class="passage rocky_bg" onclick="moreSummary(this, $('#pre_sldsummary'));">顯示更多</a>
+</nav>
+<ins id="insert_summary_point"></ins>
+
+@section Menu {
+	<li><a href="/createboard" target="/createboard">開新留言板</a></li>
+	<li><a href="/createselection" target="/createselection">開新區域</a></li>
+}
+@section PageScript {
+	<script>
+		function pagePrepare() {
+			makeRoomBanner({
+				words: "心船",
+				position: "bottom",
+				link: "/",
+				insert_before: "insert_selections_banner"
+			});
+			makeRoomBanner({
+				words: "區域一覽",
+				insert_before: "insert_selections_banner"
+			});
+			makeRoomBanner({
+				words: "留言板一覽",
+				insert_after: "insert_boards_banner"
+			});
+
+			//getGoods("/boardlist", onBoardList);
+			//var data = $("#pre_boardlist").text();
+			//data = JSON.parse(data);
+			//onBoardList(data);
+			processBoardList();
+
+			//getGoods("/sldsummary/", insertSummary);
+			//data = $("#pre_sldsummary").text();
+			//data = JSON.parse(data);
+			//insertSummary(data);
+			var $pre_sldsummary = $("#pre_sldsummary");
+			insertSummary2($pre_sldsummary);
+		}
+		function processBoardList() {
+			var data = $("#pre_boardlist");
+			var nav_data = data.children("nav");
+			var board_dict = {};
+
+			nav_data.children("a").each(function (idx, elt) {
+				var a_data = $(elt);
+				var href = a_data.attr("href");
+				var board_id = extractBoardId(href);
+				var board_name = a_data.text();
+
+				insertLinkToList({
+					address: href,
+					text: board_name,
+					insert_after: "insert_boards_point"
+				});
+				board_dict[board_id] = board_name;
+			});
+			var aside_data = data.children("aside");
+
+			aside_data.children("nav").each(function (idx, elt) {
+				var $elt = $(elt);
+				var a_data = $elt.children("a");
+				var href = a_data.attr("href");
+				var selection_name = a_data.text();
+				var board_list = $elt.children("footer").text();
+
+				insertLinkToList({
+					address: href,
+					text: selection_name,
+					insert_after: "insert_selections_point"
+				});
+				//
+				var nav_elt = makeNavigationBlock({
+					insert_after: "insert_boards_banner"
+				});
+				makeRoomBanner({
+					words: selection_name,
+					link: href,
+					insert_after: "insert_boards_banner"
+				});
+				var boards = board_list.split(",");
+
+				for (var i = 0; i < boards.length; i++) {
+					var board_id = boards[i];
+					var board_name = board_dict[board_id];
+
+					if (board_name)
+						insertLinkToList({
+							address: makeBoardLink(board_id, board_name),
+							text: board_name,
+							insert_inside_rev: nav_elt
+						});
+				}
+
+			});
+		}
+	</script>
+}

@@ -1,0 +1,92 @@
+﻿@{
+	Layout = "~/Views/Shared/_LayoutSky.cshtml";
+}
+@section PageMeta
+{
+	@Html.Partial("FacebookMeta")
+}
+<div id="pre_discussionload" class="preload_not_show">@Html.Raw(ViewBag.DiscussionLoadRoll.Output)</div>
+<script>var pre_boardsetting=@{Html.RenderAction("BoardSetting");};</script>
+<ins id="insert_point"></ins>
+
+<div class="storey not_show" id="ew_storey">
+	<table data-wrap="room_table" data-wrap-id="edit_wizard">
+		<tr>
+			<td class="layout_only">
+				<form>
+					<ins id="ew_insert_input_pt"></ins>
+					<p class="error_info">編輯留言失敗。錯誤訊息："<span></span>"</p>
+					<p>
+						<input type="button" value="確定編輯" autocomplete="off" onclick="doEditLetter(this);" />
+						<input type="button" value="取消" onclick="cancelCreateLetter();" />
+					</p>
+				</form>
+			</td>
+			<td class="layout_only">
+				<form class="tbrl">
+					<ins id="ew_insert_option_pt"></ins>
+				</form>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<div class="storey not_show" id="cw_storey">
+	<table data-wrap="room_table" data-wrap-id="create_wizard">
+		<tr>
+			<td class="layout_only">
+				<form>
+					<ins id="cw_insert_input_pt"></ins>
+					<p class="error_info">加新留言失敗。錯誤訊息："<span></span>"</p>
+					<p>
+						<input type="button" value="確定留言" autocomplete="off" onclick="doCreateLetter(this);" />
+						<input type="button" value="取消" onclick="cancelCreateLetter();" />
+					</p>
+				</form>
+			</td>
+			<td class="layout_only">
+				<form class="tbrl">
+					<ins id="cw_insert_option_pt"></ins>
+				</form>
+			</td>
+		</tr>
+	</table>
+</div>
+@section CloudLinks
+{
+	<a class="cloud_ground c_passage glbl_menu">選單</a>
+	<a class="cloud_ground c_passage" id="refresh_btn" onclick="refreshDiscussionLoad('#last');">更新</a>
+	<a class="cloud_ground c_passage" id="help_btn">使用說明</a>
+	<a class="cloud_ground c_passage"></a>
+}
+@section HelpContent
+{
+	<h3>操作</h3>
+	<p>
+		加新留言：在版面空白處雙擊[滑鼠左鍵]。留言的右上角會對齊點擊位置。<br />
+		移動留言：（編輯時）在版面其它位置雙擊[滑鼠左鍵]。<br />
+		拖曳版面：在版面空白處按下、拖曳、及放開[滑鼠左鍵]。<br />
+	</p>
+	<h3>快速鍵</h3>
+	<p>
+		滑鼠滾輪：左右捲動版面。<br />
+		上、下、左、右：移動版面。<br />
+		Home、End鍵：移到第一則、最後一則留言。<br />
+		Page up、Page down鍵：向右、向左移動一頁。<br />
+	</p>
+}
+@section Menu
+{
+	@Html.Partial("DiscussionMenu")
+	<li><a data-link="board">回留言板</a></li>
+}
+@section GlobalMenu
+{
+	<li><a data-link="discussion">文字檢視</a></li>
+	<li><a onclick="facebookShare('@ViewBag.CurrentPageUrl');">FACEBOOK分享</a></li>
+	<li><a data-link="board">回留言板</a></li>
+}
+@section PageScript
+{
+	@Scripts.Render("~/bundles/ViewDiscussionSky")
+}

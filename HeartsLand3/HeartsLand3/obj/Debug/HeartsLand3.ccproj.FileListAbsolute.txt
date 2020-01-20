@@ -1,0 +1,2 @@
+C:\Projects\HeartsLand3\HeartsLand3\HeartsLand3\bin\Debug\ServiceConfiguration.cscfg
+C:\Projects\HeartsLand3\HeartsLand3\HeartsLand3\bin\Debug\ServiceDefinition.csdef

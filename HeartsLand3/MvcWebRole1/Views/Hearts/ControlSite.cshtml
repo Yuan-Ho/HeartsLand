@@ -1,0 +1,46 @@
+﻿@using MvcWebRole1.Models;
+@{	
+	ViewBag.Title = "站台控制台 " + HeartsConfiguration.SITE_NAME;
+	Layout = "~/Views/Shared/_LayoutHorizontal.cshtml";
+}
+	<form data-wrap="room_table" data-wrap-id="step2">
+		<p>Client information.</p>
+		<p><label class='wizard'>UserHostAddress: </label><span>@Request.UserHostAddress</span></p>
+		<p><label class='wizard'>UserHostName: </label><span>@Request.UserHostName</span></p>
+		<p><label class='wizard'>HTTP_X_FORWARDED_FOR: </label><span>@Request.ServerVariables["HTTP_X_FORWARDED_FOR"]</span></p>
+		<p><label class='wizard'>REMOTE_ADDR: </label><span>@Request.ServerVariables["REMOTE_ADDR"]</span></p>
+		<p><label class='wizard'>UserLanguages: </label><span>@Util.Print(Request.UserLanguages)</span></p>
+	</form>
+
+	<form data-wrap="room_table" data-wrap-id="step1">
+		<p>Upgrade table.</p>
+		<p>
+			<input type="button" value="確定" onclick="/*this.disabled = true; */doUpgradeTable(this);" />
+			<input type="button" value="取消" onclick="location.assign('/');" />
+		</p>
+		<p class="status_info"></p>
+	</form>
+@section Menu {
+}
+@section PageScript {
+	<script>
+		function pagePrepare() {
+		}
+		function doUpgradeTable(btn) {
+			var btn_elt = $(btn);
+			var status_info = findInfoElement(btn_elt, 1, 1, ".status_info");
+
+			btn_elt.prop("disabled", true);
+			status_info.text("正在連絡伺服器…");
+
+			postGoods("/daupgradetable", {}, function (suc, response) {
+				if (suc && response.ok) {
+					status_info.text("結果：成功。");
+				}
+				else {
+					status_info.addClass("is_error").text("結果：失敗。錯誤訊息：" + response);
+				}
+			});
+		}
+	</script>
+}

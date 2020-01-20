@@ -1,0 +1,79 @@
+﻿@{
+	ViewBag.Title = "開新天空主題 " + HeartsConfiguration.SITE_NAME;
+	Layout = "~/Views/Shared/_LayoutSky.cshtml";
+}
+<script>var pre_boardsetting=@{Html.RenderAction("BoardSetting");};</script>
+
+<div class="storey not_show" id="cw_storey">
+	<table data-wrap="room_table" data-wrap-id="create_wizard">
+		<tr>
+			<td class="layout_only">
+				<form>
+					<ins id="cw_insert_input_pt"></ins>
+					<p class="error_info">開新主題失敗。錯誤訊息："<span></span>"</p>
+					<p>
+						<input type="button" value="確定張貼" onclick="doCreateDiscussion(this, 3);" />
+						<input type="button" value="取消" onclick="location.assign('/' + getboardid());" />
+					</p>
+				</form>
+			</td>
+			<td class="layout_only">
+				<form class="tbrl">
+					<ins id="cw_insert_option_pt"></ins>
+				</form>
+			</td>
+		</tr>
+	</table>
+</div>
+@section CloudLinks
+{
+	<a class="cloud_ground c_passage glbl_menu">選單</a>
+	<a class="cloud_ground c_passage"></a>
+	<a class="cloud_ground c_passage"></a>
+	<a class="cloud_ground c_passage"></a>
+}
+@section Menu
+{
+	<li><a data-link="board">回留言板</a></li>
+}
+@section GlobalMenu
+{
+	<li><a data-link="board">回留言板</a></li>
+}
+@section PageScript
+{
+	<script>
+		var create_wizard_elt;
+
+		function pagePrepare() {
+			g_image_limit = Infinity;
+
+			var board_name = pre_boardsetting.BoardName;
+			document.title = "開新天空主題 " + board_name + " 心船";
+			prepareShortcut(board_name);
+
+			$("#cw_storey").removeClass("not_show");
+			create_wizard_elt = makeLetterEditor("create_wizard", "cw_insert_input_pt", "cw_insert_option_pt",
+							{
+								have_heading: true,
+								have_reply_to: false,
+								big: true,
+								get_new_sn: function () { return 1; },
+								can_split: false,
+								is_edit: false
+							});
+			//create_wizard_elt.focus();
+			//var pos = { left: 0, top: 0 };
+			var big_coord = { x: 0, y: 0 };
+
+			showWizard("cw_storey", big_coord);
+
+			setTimeout(function () {
+				moveWizard("cw_storey", big_coord);
+			}, 0);		// to let width() become correct.
+
+			//small_view_origin.x = -50;
+			//small_view_origin.y = -($(window).height() - $cw_form.height()) / 2;
+		}
+	</script>
+}

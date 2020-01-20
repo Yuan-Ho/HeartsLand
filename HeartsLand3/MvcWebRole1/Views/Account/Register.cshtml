@@ -1,0 +1,157 @@
+﻿@{
+	ViewBag.Title = "註冊 " + HeartsConfiguration.SITE_NAME;
+	Layout = "~/Views/Shared/_LayoutHorizontal.cshtml";
+}
+<form data-wrap="room_table" data-wrap-id="step5">
+	<p class="createinprocess">正在連絡伺服器…</p>
+	<section class="createsuccess">
+		<p>恭喜您！註冊成功！</p>
+		<p>請將下列使用者名稱及密碼抄下，或複製到記事本儲存起來。</p>
+		<p>
+			<label class='wizard'>使用者名稱：</label><span id="suc_user_name" class="clear_read"></span></p>
+		<p>
+			<label class='wizard'>密碼：</label><span id="suc_password" class="clear_read"></span></p>
+		<p>若欲讓瀏覽器記憶密碼，請將密碼複製起來，然後到<a class="passage rocky_bg" href="/account/login">登入</a>頁面立刻登入一次。</p>
+	</section>
+	<p class="createfail error_info">註冊失敗。錯誤訊息："<span id="createfailmsg"></span>"</p>
+	<p>
+		<input class="createfail" type="button" value="重試" onclick="location.reload();" />
+		<input type="button" value="回首頁" onclick="location.assign('/');" />
+	</p>
+</form>
+
+<form data-wrap="room_table" data-wrap-id="step4">
+	<p>您的新使用者名稱是"<span id="final_user_name"></span>"，密碼是"<span id="final_password"></span>"。</p>
+	<p>所需資料皆已蒐集完畢。請按”繼續”連絡伺服器進行註冊，或按”取消”回到首頁。</p>
+	<p>
+		<input type="button" value="繼續" onclick="doRegister(); wizardNextStep(4);" />
+		<input type="button" value="取消" onclick="location.assign('/');" />
+	</p>
+</form>
+
+<form data-wrap="room_table" data-wrap-id="step3" onsubmit="passwordDetermined(); return false;">
+	<p>系統已為您生成一個密碼！密碼由系統自動亂數生成，而不讓使用者自行輸入的原因是為了防止共同密碼問題。</p>
+	<p>共用密碼問題是指因為多數人習慣在不同的網站共用相同的密碼，所以當其中一個網站把您的密碼洩露時，您在其它網站的密碼同時也被洩露。</p>
+	<p>若不喜歡此密碼，可按"從新產生密碼"生成另一個密碼。</p>
+	<p>您可以等註冊成功後再抄下密碼。決定後請按”繼續”。</p>
+	<p>
+		<label class='wizard'>密碼：</label><input type="text" id="read_password" class="clear_read" readonly />
+	</p>
+	<p>
+		<input type="submit" value="繼續" />
+		<input type="button" value="取消" onclick="location.assign('/');" />
+		<input type="button" value="從新產生密碼" onclick="generatePassword();" />
+	</p>
+</form>
+
+<form data-wrap="room_table" data-wrap-id="step2" onsubmit="nameDetermined(); return false;">
+	<p>請為您的帳戶取一個使用者名稱！長度請在3到24字之間。</p>
+	<p>"使用者名稱"是登入時用的名字，請以簡短好記為上。</p>
+	<p>"使用者名稱"不同於"暱稱"，"暱稱"是張貼留言時的署名，"暱稱"可以隨時更改。</p>
+	<p>輸入完成請按”繼續”。</p>
+
+	<ins id="insert_input_pt"></ins>
+	<p>
+		<label class='wizard'>預覽使用者名稱：</label><span id="preview_user_name"></span>
+	</p>
+	<p>
+		<input type="submit" value="繼續" />
+		<input type="button" value="取消" onclick="location.assign('/');" />
+	</p>
+</form>
+
+<form data-wrap="room_table" data-wrap-id="step1">
+	<p>歡迎註冊！現在就註冊一個新的使用者帳戶！"使用者帳戶"是由一個"使用者名稱"及一個"密碼"組成。</p>
+	<p>有了"使用者帳戶"，您可以在任一台電腦登入並存取個人化的資訊。</p>
+	<p>若欲繼續請按”繼續”，若欲回到首頁請按”取消”。</p>
+	<p>
+		<input type="button" value="繼續" onclick="wizardNextStep(1); $('#new_user_name').focus();" />
+		<input type="button" value="取消" onclick="location.assign('/');" />
+	</p>
+</form>
+
+@section Menu {
+}
+@section PageScript {
+	<script>
+		function pagePrepare() {
+			makePlainInput({
+				id: "new_user_name",
+				name: "使用者名稱",
+				max_len: USER_NAME_FIELD_MAX_LEN,
+				min_len: USER_NAME_FIELD_MIN_LEN,
+				size: 24,
+				default_value: "",
+				validate: "user_name",
+				insert_before: "insert_input_pt"
+			});
+
+			$("#step2").css("visibility", "hidden");
+			$("#step3").css("visibility", "hidden");
+			$("#step4").css("visibility", "hidden");
+			$("#step5").css("visibility", "hidden");
+			$("#step6").css("visibility", "hidden");
+			//
+			$("#new_user_name").on("input", function () {
+				setTimeout(function () {
+					$("#preview_user_name").text($("#new_user_name").val());
+				}, 0);
+			});
+		}
+		function doRegister() {
+			return;		//20150924 stop using sql server
+
+			var username = $('#new_user_name').val();
+			var pwd = $('#read_password').val();
+			var m_id = localStorage["m_id"];
+
+			$(".createsuccess").hide();
+			$(".createfail").hide();
+
+			var post_data = {
+				UserName: username,
+				Password: pwd,
+				ConfirmPassword: pwd,
+				m_id: m_id,
+			};
+
+			postGoods("/account/ajaxregister", post_data,
+				function (suc, response) {
+					$(".createinprocess").hide();
+
+					if (suc && response.ok) {
+						$("#suc_user_name").text(username);
+						$("#suc_password").text(pwd);
+
+						$(".createsuccess").show();
+					}
+					else {
+						$("#createfailmsg").text(response);
+						$(".createfail").show();
+					}
+				});
+		}
+		function nameDetermined() {
+			if (checkPlainInput($('#new_user_name'))) {
+				wizardNextStep(2);
+				generatePassword();
+			}
+		}
+		function passwordDetermined() {
+			$('#final_user_name').text($("#new_user_name").val());
+			$('#final_password').text($("#read_password").val());
+
+			wizardNextStep(3);
+		}
+		function generatePassword() {
+			var pwd = "";
+			for (var i = 0; i < 8; i++)
+				pwd += randomPick("23456789abcdefghijkmnpqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ");		// no 01loO.
+
+			$("#read_password").val(pwd);
+			//$("#read_password").focus();
+			var elt = document.getElementById("read_password");
+			elt.select();
+		}
+	</script>
+}

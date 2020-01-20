@@ -1,0 +1,46 @@
+﻿@{
+	Layout = "~/Views/Shared/_LayoutLand.cshtml";
+}
+@section PageMeta
+{
+	<meta name="viewport" content="height=device-height, initial-scale=1" />
+	@Styles.Render("~/Content/hearts_horizontal")
+	@RenderSection("PageMeta", false)
+}
+<table>
+	<tr id="storey_sky">
+		<td></td>
+	</tr>
+	<tr id="storey_2">
+		<td class="storey">
+			<div class="preload_not_show">
+				<p>本網站使用直排文字。您目前所用的瀏覽器似乎並不支援直排文字。</p>
+				<p>建議改用Chrome或Internet Explorer 10以上瀏覽本網站。造成不便敬請見諒。</p>
+			</div>
+			@RenderSection("Storey2", false)
+		</td>
+	</tr>
+	<tr id="storey_1">
+		<td class="storey">
+			@RenderBody()
+		</td>
+	</tr>
+	<tr id="storey_ground">
+		<td></td>
+	</tr>
+	<tr id="storey_crust">
+		<td></td>
+	</tr>
+</table>
+
+<canvas id="moongate_canvas"></canvas>
+<div id="contextdragbox"></div>
+@section Menu
+{
+	@RenderSection("Menu")
+}
+@section PageScript
+{
+	@Scripts.Render("~/bundles/hearts_horizontal")
+	@RenderSection("PageScript")
+}
